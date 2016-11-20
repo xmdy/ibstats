@@ -1,3 +1,3 @@
 # ibstats
-# create data scripts/venv.sh manage.py loadtestdata stats.Trader:100 stats.Transaction:10000 stats.Deal:300000
-# start server scripts/venv.sh runserver
+create data scripts/venv.sh manage.py loadtestdata stats.Trader:100 stats.Transaction:10000 stats.Deal:300000
+start server scripts/venv.sh runserver
