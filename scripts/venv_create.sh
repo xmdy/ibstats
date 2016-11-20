@@ -8,4 +8,4 @@ virtualenv ${VENV}
 source $VENV/bin/activate
 pip install --upgrade pip
 pip install --upgrade setuptools
-pip --no-cache-dir install -r requirements.txt
+pip --no-cache-dir install -r $ROOT/requirements.txt
