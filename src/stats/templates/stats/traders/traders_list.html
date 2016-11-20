@@ -1,0 +1,38 @@
+{% extends 'common/base.html' %}
+{% load humanize %}
+{% load currencies %}
+{% block page_content_outer %}
+    <!-- template stats/traders/traders_list.html -->
+    <h4 style="margin-top: 40px;margin-bottom:30px;">
+        Trading stats {{ today|date:'d M Y' }}<br />
+        <small>Trading volume {{ stats.today_volume|currency }} Trading result: {{ stats.today_result|currency }}</small>
+    </h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>TODAY PROFIT</th>
+                <th>TOTAL PROFIT</th>
+                <th>TOTAL DEPOSIT</th>
+                <th>BALANCE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in object_list %}
+                <tr>
+                    <td>{{ obj.pk }}</td>
+                    <td class="b-trader-name">{{ obj.name|truncatechars:16 }}</td>
+                    <td>{{ obj.today_profit|currency }}</td>
+                    <td>{{ obj.total_profit|currency }}</td>
+                    <td>{{ obj.total_deposit|currency }}</td>
+                    <td>{{ obj.balance|currency }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <style>
+    .b-trader-name {white-space: nowrap;}
+    </style>
+{% endblock %}
