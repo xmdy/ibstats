@@ -14,25 +14,30 @@ class TradersStatsView(ListView):
     def get(self, request, *args, **kwargs):
         today = timezone.datetime.today()
 
-        if 'year' not in kwargs:
+        if 'year' not in kwargs: # check params and redirect to proper day
             kw = {'year': today.year, 'month': today.month, 'day': today.day}
             return redirect(reverse('traders', kwargs=kw))
 
+        # set params
         self.year = int(kwargs.get('year', today.year))
         self.month = int(kwargs.get('month', today.month))
         self.day = int(kwargs.get('day', today.day))
 
+        # create params for filtering
         self.day_start = timezone.datetime(self.year, self.month, day=self.day, hour=0, minute=0, second=0)
         self.day_end = timezone.datetime(self.year, self.month, day=self.day, hour=23, minute=59, second=59)
 
+        # create today deals qs
         self.today_deals = self.get_deals_qs()
 
         return super(TradersStatsView, self).get(request, *args, **kwargs)
 
     def get_deals_qs(self):
+        """return deals for date range"""
         return Deal.objects.filter(time__gte=self.day_start, time__lte=self.day_end).order_by()
 
     def get_queryset(self):
+        """Prepare Traders qs"""
         return self.model.objects.filter(id__in=self.today_deals.values_list('trader_id'))
 
     def get_today_profit(self):
